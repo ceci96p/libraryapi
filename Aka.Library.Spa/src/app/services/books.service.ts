@@ -4,7 +4,8 @@ import { Book } from '../shared/book';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { SignedOutBook } from '../shared/signed-out-book';
-import { map } from 'lodash';
+// import { map } from 'lodash';
+import { map } from 'rxjs/operators';
 import { GoogleBooksMetadata } from '../shared/google-books-metadata';
 import { Observable } from 'rxjs/internal/Observable';
 import { throwError } from 'rxjs/internal/observable/throwError';
@@ -12,6 +13,7 @@ import { of } from 'rxjs/internal/observable/of';
 
 @Injectable()
 export class BooksService {
+
 
   apiUrl: string;
   googleBooksAPIKey: string;
@@ -21,12 +23,15 @@ export class BooksService {
     this.googleBooksAPIKey = 'AIzaSyCCN_lQcnEQ51ohoDBroFvfwN8wnJi9iPY';
   }
 
-  getBooks(libraryId: number): Observable<Book[]> {
+  getBooksUrl(libraryId: number): Observable<LibraryBook[]> {
     const url = `${this.apiUrl}${libraryId}/books`;
-    return this.http.get<LibraryBook[]>(url)
-      .pipe(
-        map(items => items.map(item => item.book))
-      );
+    return this.http.get<LibraryBook[]>(url);
+  }
+
+  getBooks(libraryId: number): Observable<Book[]>{
+    return this.getBooksUrl(libraryId).pipe(
+      map((items: any[]) => items.map(item => item.book))
+      )
   }
 
   getBook(libraryId: number, bid: number): Observable<Book> {

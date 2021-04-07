@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { take, map } from 'rxjs/operators';
+// import { ConsoleReporter } from 'jasmine';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -16,10 +17,12 @@ export class AuthGuard implements CanActivate {
         take(1),
         map((isLoggedIn: boolean) => {
           if (!isLoggedIn) {
-            this.router.navigate(['/login']);
+            this.router.navigate(['/login'], { queryParams: { returnUrl: state.url }});
             return false;
           }
-          return true;
+          if (isLoggedIn) {
+            return true;
+          }
         })
       );
 
