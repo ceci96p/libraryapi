@@ -44,9 +44,13 @@ export class BookListComponent implements OnInit, AfterViewInit {
           })
         )
         .subscribe((books: Book []) => {
-          this.dataSource.data = books;
+
+          let filteredData = books.filter(book => book.isAvailable == true);
+          this.dataSource.data = filteredData;
+
         });
     }
+
   }
 
   constructor(private books: BooksService, private router: Router, private route: ActivatedRoute) { }

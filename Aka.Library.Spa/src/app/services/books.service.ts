@@ -30,8 +30,7 @@ export class BooksService {
 
   getBooks(libraryId: number): Observable<Book[]>{
     return this.getBooksUrl(libraryId).pipe(
-      map((items: any[]) => items.map(item => item.book))
-      )
+      map((items: any[]) => items.map(item => item.book)));
   }
 
   getBook(libraryId: number, bid: number): Observable<Book> {
@@ -72,8 +71,9 @@ export class BooksService {
    * @memberof BooksService
    */
   getNumberOfAvailableBookCopies(libraryId: number, bookId: number): Observable<number> {
-    // TODO: Add implementation
-    return throwError('Not Implemented');
+    // TODO: Check implementation
+    const url = `${this.apiUrl}${libraryId}/books/${bookId}`;
+    return this.http.get<number>(url,{});
   }
 
   checkOutBook(libraryId: number, bookId: number, memberId: number): Observable<SignedOutBook> {
@@ -94,13 +94,19 @@ export class BooksService {
    * @returns {Observable<GoogleBooksMetadata>}
    * @memberof BooksService
    */
+  
   getBookMetaData(isbn: string): Observable<GoogleBooksMetadata> {
-    // TODO: Add implementation
+    // TODO: Check implementation
+
     const url = `https://www.googleapis.com/books/v1/volumes?q=isbn:${isbn}&key=${this.googleBooksAPIKey}`;
 
-    // return this.http.get(url);
-    return throwError('Funtion not implemented');
+    return this.http.get(url).pipe(
+      map((result:any) => ({ 
+        description: result.items[0].volumeInfo.description, 
+        authors: result.items[0].volumeInfo.authors,
+        imageLinks: result.items[0].volumeInfo.imageLinks
+    })));
+    }
 
-  }
 
 }

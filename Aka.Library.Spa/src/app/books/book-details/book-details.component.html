@@ -1,4 +1,5 @@
 <section *ngIf="book" fxLayout="row wrap" fxLayoutAlign="center center">
+  <p>hello</p>
   <h2>Book Title: {{ book.title }} - {{ book.isbn }}</h2>
   <div>
     <button *ngIf="book.isCheckedOut" mat-button (click)="returnBook()">Return</button>

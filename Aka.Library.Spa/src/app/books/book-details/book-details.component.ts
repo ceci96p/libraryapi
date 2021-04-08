@@ -43,7 +43,9 @@ export class BookDetailsComponent implements OnInit {
         const bookId = +params.get('id');
         this.getBookDetails(libraryId, bookId);
       });
-  }
+    }
+
+  
 
   /**
    * Check if the maximum number of books for the current member has been reached
