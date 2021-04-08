@@ -25,10 +25,14 @@ NOTE: just navigation to the https://aka-library-api.azurewebsites.net/api in yo
 #4 Create a new component in the checked-out module that lists all previously checked out books of the logged in member.
   +Add a route to access this component in the of checked-out module 
   +Verify that the user can load the page when clicking the navigation button.
+  
+  - I did not got the chance to look at this in depth but I understood that I had to create a new Angular component and then make a route that woud allow me to get there from teh checked-out module and that it had to be viewable from 'Checked Out' option from teh main menu
 
 #5 On the profile page please add the existing components for the two checkout module components in the tab on the page
   +Currently checked-out books components
   +Checked-out books history
+  
+  - I did not got the chance to look at this in depth but the idea would be to get the list of the checked-out  by userID when calling GET '/api/members/{id}' and then use the fields "whenSignedOut"  and "whenReturned" dates to display the 'Checked-out books history' and for the objects that have "whenReturned" value == null then would be part of the 'Currently checked-out books components" list
 
 #6 In the BooksService the getBookMetaData should return the books metadata(GoogleBooksMetadata). Please integrate with the google books api to get meta data for the book and display it in the book details component.
 
@@ -37,11 +41,13 @@ NOTE: just navigation to the https://aka-library-api.azurewebsites.net/api in yo
 
 #7 On books details component please complete the following
   +display the number of copies of that book that are available to be checked out.
-  +A “Return” link should be available beside each book.  The user can click on the “Return” link to       return the book.  (The book ID, library ID, and member ID    are known here.)
-  +Enforce this restriction No member can have more than two books signed out of the library at any       one time.
+  +A “Return” link should be available beside each book.  The user can click on the “Return” link to return the book. (The book ID, library ID, and member ID are      known here.)
+  +Enforce this restriction No member can have more than two books signed out of the library at any one time.
   +Allow multiple (different) books to be signed out by a member at once.
   +The user cannot sign out more copies than are available of that book.
   +Validation needs to be enforced.
+  
+  - I wanted to implement this but couldn't figure out why 'BookDetails" wasn't displaying at all, I started implemneting some functions without testing, but I understand most of this was to add code to already implemented functions for validation and restrictions
 
 #8 On the library list page fix the layout of the table to look like the sample image below (bug)
-  - I fixed this one by making the the flex direction of the container of the input filter and the list to column instead of row
+  - I fixed this one by making the the 'flex-direction' on the css file of the container of the input filter and the list to column instead of row
